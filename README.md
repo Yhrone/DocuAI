@@ -1,36 +1,161 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DucoAi
+
+DucoAi is an intelligent document collaboration platform that leverages AI to streamline document creation, editing, and management. With advanced natural language processing capabilities, DucoAi helps teams work more efficiently with their documents.
+
+
+## Features
+
+- **AI-Powered Document Analysis**: Extract key insights and summaries automatically
+- **Smart Collaboration**: Real-time editing with contextual AI suggestions
+- **Document Management**: Organize and search across your entire document library
+- **Version Control**: Track changes and maintain document history
+- **Custom Templates**: Create and use templates for consistent document creation
+- **Integrations**: Connect with popular tools like Google Drive, Dropbox, and Notion
+- **Security**: Enterprise-grade encryption and access controls
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, React, Tailwind CSS, Shadcn UI
+- **Backend**: tRPC, Prisma, PostgreSQL
+- **Authentication**: Clerk
+- **AI/ML**: OpenAI API, Pinecone for vector embeddings
+- **File Storage**: Uploadthing
+- **Deployment**: Vercel
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ and npm
+- PostgreSQL database
+- OpenAI API key
+- Clerk account for authentication
+- Pinecone account for vector database
+- Uploadthing account for file uploads
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Yhrone/ducoai.git
+cd ducoai
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+
+4. Fill in your environment variables in `.env.local`:
+```
+# Database
+DATABASE_URL=your_postgresql_connection_string
+
+# OpenAI
+OPENAI_API_KEY=your_openai_api_key
+
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+
+# Pinecone
+PINECONE_API_KEY=your_pinecone_api_key
+PINECONE_ENVIRONMENT=your_pinecone_environment
+PINECONE_INDEX=your_pinecone_index
+
+# Uploadthing
+UPLOADTHING_SECRET=your_uploadthing_secret
+UPLOADTHING_APP_ID=your_uploadthing_app_id
+
+# App URLs
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+5. Set up the database:
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+6. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+7. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+ducoai/
+├── src/                # Source files
+│   ├── app/            # Next.js app directory
+│   ├── components/     # React components
+│   ├── lib/            # Utility functions and shared libraries
+│   ├── server/         # tRPC server and API routes
+│   ├── styles/         # Global styles
+│   └── types/          # TypeScript type definitions
+├── prisma/             # Prisma schema and migrations
+├── public/             # Static files
+└── scripts/            # Build and deployment scripts
+```
 
-## Learn More
+## Key Components
 
-To learn more about Next.js, take a look at the following resources:
+### Document Processing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+DucoAi processes documents through several stages:
+1. **Upload & Analysis**: Documents are securely uploaded and analyzed for content and structure
+2. **Vectorization**: Key content is converted to vector embeddings for semantic search
+3. **Indexing**: Documents are indexed for quick retrieval and cross-referencing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### AI Features
 
-## Deploy on Vercel
+- **Content Generation**: Create high-quality document drafts based on simple prompts
+- **Summarization**: Get concise summaries of long documents
+- **Semantic Search**: Find relevant documents based on natural language queries
+- **Suggestions**: Receive intelligent writing suggestions while editing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Reference
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+DucoAi provides a comprehensive API built with tRPC. Full documentation is available in the application dashboard under the Developer section.
+
+Example usage:
+
+```typescript
+// Creating a new document
+const newDocument = await api.documents.create({
+  title: "Project Proposal",
+  content: "This is a draft proposal for the new project.",
+  folderId: "folder-uuid"
+});
+
+// Generating AI suggestions
+const suggestions = await api.ai.generateSuggestions({
+  documentId: "doc-uuid",
+  context: "Need to expand the introduction section."
+});
+```
+
+
+## Contributing
+
+We welcome contributions to DucoAi! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+
+Built with 💡 by the DucoAi Team
